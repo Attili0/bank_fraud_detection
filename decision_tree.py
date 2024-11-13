@@ -265,6 +265,7 @@ print(f"Média da PR AUC no teste: {np.mean(test_pr_aucs):.4f}")
 
 print(f"\nProfundidade média das árvores: {np.mean(depths):.2f}")
 ####################################################################################################
+
 # Testaremos também um modelo de ensemble, semelhante a uma random forest
 from sklearn.model_selection import StratifiedKFold
 from sklearn.tree import DecisionTreeClassifier
