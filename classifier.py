@@ -175,10 +175,10 @@ train_pol(pol, reg, solver_alg, iter_limit, deg)
 y_train_probs = clf_nonlinear.predict_proba(X_train)[:, 1]  # Probabilidade para a classe positiva
 
 # Calcule precisão e recall para diferentes thresholds
-precision, recall, _ = precision_recall_curve(y_train, y_train_probs)
+precision_train, recall_train, _ = precision_recall_curve(y_train, y_train_probs)
 
 # Calcule a AUC da curva Precision-Recall
-train_pr_auc = auc(recall, precision)
+train_pr_auc = auc(recall_train, precision_train)
 print(f"Área sob a curva Precision-Recall no conjunto de treino: {train_pr_auc:.5f}")
 
 
@@ -186,12 +186,32 @@ print(f"Área sob a curva Precision-Recall no conjunto de treino: {train_pr_auc:
 y_test_probs = clf_nonlinear.predict_proba(X_test)[:, 1]  # Probabilidade para a classe positiva
 
 # Calcule precisão e recall para diferentes thresholds
-precision, recall, _ = precision_recall_curve(y_test, y_test_probs)
+precision_test, recall_test, _ = precision_recall_curve(y_test, y_test_probs)
 
 # Calcule a AUC da curva Precision-Recall
-test_pr_auc = auc(recall, precision)
+test_pr_auc = auc(recall_test, precision_test)
 print(f"Área sob a curva Precision-Recall no conjunto de teste: {test_pr_auc:.5f}")
 print()
+# # Gerar e plotar a curva ROC
+# fpr, tpr, thresholds = roc_curve(y_test, y_prob)
+
+# Plotar a curva Precision-Recall para o conjunto de treino
+plt.figure(figsize=(5, 3))
+plt.plot(recall_train, precision_train, color='blue', label=f'Curva Precision-Recall (AUC = {train_pr_auc:.2f})')
+plt.xlabel('Recall')
+plt.ylabel('Precisão')
+plt.title('Curva Precision-Recall - Conjunto de Treino')
+plt.legend(loc='lower left')
+plt.show()
+
+# Plotar a curva Precision-Recall para o conjunto de teste
+plt.figure(figsize=(5, 3))
+plt.plot(recall_test, precision_test, color='green', label=f'Curva Precision-Recall (AUC = {test_pr_auc:.2f})')
+plt.xlabel('Recall')
+plt.ylabel('Precisão')
+plt.title('Curva Precision-Recall - Conjunto de Teste')
+plt.legend(loc='lower left')
+plt.show()
 
 
 # Exibir os coeficientes encontrados
